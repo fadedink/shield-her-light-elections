@@ -1,0 +1,379 @@
+[06:32, 13/05/2025] +254 794 209536: <!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shield Her Light - Election Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+header img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+header .title-section {
+  text-align: left;
+}
+
+header .title-section h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+header .title-section p {
+  margin: 0;
+  font-size: 12px;
+}
+
+main {
+  padding: 30px;
+  max-width: 800px;
+}
+
+.countdowns {
+  margin-top: 20px;
+}
+
+.btn-container {
+  margin-top: 30px;
+}
+
+.btn-container a {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #f39c12;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.posts {
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.posts ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.posts li {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+  </style>
+</head><body>
+  <header>
+    <img src="logo.png" alt="Shield Her Light Logo">
+    <div class="title-section">
+      <h1>SHIELD HER LIGHT</h1>
+      <p>Empowering through leadership</p>
+    </div>
+  </header>  <main>
+    <h2>Welcome to the Shield Her Light Election Portal</h2>
+    <p>Please apply for a leadership position or cast your vote for a candidate.</p><div class="countdowns text-center my-6">
+  <h2 class="text-xl font-semibold mb-2">Application closes in:</h2>
+  <p id="appCountdown" class="text-lg text-yellow-200 font-mono"></p>
+
+  <h2 class="text-xl font-semibold mt-4 mb-2">Voting opens in:</h2>
+  <p id="voteCountdown" class="text-lg text-green-200 font-mono"></p>
+</div>
+
+<div class="btn-container">
+  <a href="apply.html">Apply for a Position</a>
+  <a href="vote.html">Vote Now</a>
+</div>
+
+<div class="posts">
+  <h3>Available Posts:</h3>
+  <ul>
+    <li>President</li>
+    <li>Vice President</li>
+    <li>Secretary General</li>
+    <li>Organizing Secretary</li>
+    <li>Finance Chairperson</li>
+    <li>Public Relations Officer</li>
+    <li>Welfare Officer</li>
+  </ul>
+</div>
+
+  </main>  <script>
+    function updateCountdown(id, deadline) {
+      const x = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+          document.getElementById(id).innerHTML = "Time expired";
+          clearInterval(x);
+        } else {
+          document.getElementById(id).innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
+        }
+      }, 1000);
+    }
+
+    const appDeadline = new Date("May 15, 2025 23:59:59").getTime();
+    const voteStart = new Date("May 16, 2025 07:00:00").getTime();
+
+    updateCountdown("appCountdown", appDeadline);
+    updateCountdown("voteCountdown", voteStart);
+  </script></body></html>
+[06:43, 13/05/2025] +254 794 209536: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply - Shield Her Light Election Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    header img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-right: 15px;
+    }
+
+    header .title-section {
+      text-align: left;
+    }
+
+    header .title-section h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header .title-section p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    main {
+      padding: 30px;
+      max-width: 800px;
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      background-color: #ecf0f1;
+      color: #2c3e50;
+    }
+
+    .form-container input[type="file"] {
+      padding: 8px;
+    }
+
+    .form-container button {
+      padding: 12px 24px;
+      background-color: #f39c12;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      margin-top: 20px;
+    }
+
+    .form-container button:hover {
+      background-color: #e67e22;
+    }
+
+    .btn-container {
+      margin-top: 30px;
+    }
+
+    .btn-container a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #f39c12;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Shield Her Light Logo">
+    <div class="title-section">
+      <h1>SHIELD HER LIGHT</h1>
+      <p>Empowering through leadership</p>
+    </div>
+  </header>
+
+  <main>
+    <h2>Apply for a Leadership Position</h2>
+
+    <div class="form-container">
+      <h2>Application Form</h2>
+      <form id="application-form">
+        <input type="email" id="email" placeholder="Your Email" required>
+        <input type="tel" id="phone" placeholder="Your Phone Number" required>
+        <select id="gender" required>
+          <option value="" disabled selected>Select Your Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <select id="post" required>
+          <option value="" disabled selected>Select Position</option>
+          <option value="President">President</option>
+          <option value="Vice President">Vice President</option>
+          <option value="Secretary General">Secretary General</option>
+          <option value="Organizing Secretary">Organizing Secretary</option>
+          <option value="Finance Chairperson">Finance Chairperson</option>
+          <option value="Public Relations Officer">Public Relations Officer</option>
+          <option value="Welfare Officer">Welfare Officer</option>
+        </select>
+        <textarea id="intentions" placeholder="Why are you applying for this position?" rows="4" required></textarea>
+        <input type="file" id="profilePicture" required>
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+
+    <div class="btn-container">
+      <a href="index.html">Back to Portal</a>
+    </div>
+  </main>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Initialize EmailJS
+    emailjs.init("service_lc03bxg");
+
+    // Handle form submission
+    document.getElementById('application-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const gender = document.getElementById('gender').value;
+      const post = document.getElementById('post').value;
+      const intentions = document.getElementById('intentions').value;
+      const profilePicture = document.getElementById('profilePicture').files[0];
+
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('gender', gender);
+      formData.append('post', post);
+      formData.append('intentions', intentions);
+      formData.append('profilePicture', profilePicture);
+
+      // Send confirmation email using EmailJS
+      emailjs.sendForm('service_lc03bxg', 'template_8pcva3w', formData)
+        .then(function(response) {
+          alert('Your application has been submitted successfully!');
+        }, function(error) {
+          alert('Error submitting the application. Please try again.');
+        });
+    });
+  <script>
+    document.getElementById('application-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const gender = document.getElementById('gender').value;
+    const post = document.getElementById('post').value;
+    const intentions = document.getElementById('intentions').value;
+    const profilePicture = document.getElementById('profilePicture').files[0];
+
+    // Upload image to imgur or similar service first
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      const imageURL = reader.result;
+
+      fetch('AKfycby1ooYAzFt8f1qNZfAN6UFQb_z5JY9gBljvItdqFu9i', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, phone, gender, post, intentions, imageURL })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.result === 'success') {
+            alert('Application submitted successfully!');
+            document.getElementById('application-form').reset();
+          } else {
+            alert('Failed to submit.');
+          }
+        });
+    };
+    reader.readAsDataURL(profilePicture);
+  });
+  </script>
+</body>
+</html>

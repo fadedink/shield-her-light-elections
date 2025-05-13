@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shield Her Light - Election Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+header img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+header .title-section {
+  text-align: left;
+}
+
+header .title-section h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+header .title-section p {
+  margin: 0;
+  font-size: 12px;
+}
+
+main {
+  padding: 30px;
+  max-width: 800px;
+}
+
+.countdowns {
+  margin-top: 20px;
+}
+
+.btn-container {
+  margin-top: 30px;
+}
+
+.btn-container a {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #f39c12;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.posts {
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.posts ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.posts li {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+  </style>
+</head><body>
+  <header>
+    <img src="logo.png" alt="Shield Her Light Logo">
+    <div class="title-section">
+      <h1>SHIELD HER LIGHT</h1>
+      <p>Empowering through leadership</p>
+    </div>
+  </header>  <main>
+    <h2>Welcome to the Shield Her Light Election Portal</h2>
+    <p>Please apply for a leadership position or cast your vote for a candidate.</p><div class="countdowns text-center my-6">
+  <h2 class="text-xl font-semibold mb-2">Application closes in:</h2>
+  <p id="appCountdown" class="text-lg text-yellow-200 font-mono"></p>
+
+  <h2 class="text-xl font-semibold mt-4 mb-2">Voting opens in:</h2>
+  <p id="voteCountdown" class="text-lg text-green-200 font-mono"></p>
+</div>
+
+<div class="btn-container">
+  <a href="apply.html">Apply for a Position</a>
+  <a href="vote.html">Vote Now</a>
+</div>
+
+<div class="posts">
+  <h3>Available Posts:</h3>
+  <ul>
+    <li>President</li>
+    <li>Vice President</li>
+    <li>Secretary General</li>
+    <li>Organizing Secretary</li>
+    <li>Finance Chairperson</li>
+    <li>Public Relations Officer</li>
+    <li>Welfare Officer</li>
+  </ul>
+</div>
+
+  </main>  <script>
+    function updateCountdown(id, deadline) {
+      const x = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+          document.getElementById(id).innerHTML = "Time expired";
+          clearInterval(x);
+        } else {
+          document.getElementById(id).innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
+        }
+      }, 1000);
+    }
+
+    const appDeadline = new Date("May 15, 2025 23:59:59").getTime();
+    const voteStart = new Date("May 16, 2025 07:00:00").getTime();
+
+    updateCountdown("appCountdown", appDeadline);
+    updateCountdown("voteCountdown", voteStart);
+  </script></body></html>

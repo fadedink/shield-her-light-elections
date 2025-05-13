@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vote - Shield Her Light</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    header img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-right: 15px;
+    }
+
+    header .title-section h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header .title-section p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    main {
+      padding: 30px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h2, h3 {
+      color: #fff;
+    }
+
+    .position-section {
+      margin-top: 40px;
+    }
+
+    .candidate {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.08);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .candidate img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #f39c12;
+    }
+
+    .candidate-details {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .candidate-details p {
+      margin: 5px 0;
+    }
+
+    .candidate button {
+      padding: 10px 20px;
+      background-color: #f39c12;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .candidate button:hover {
+      background-color: #e67e22;
+    }
+
+    .thank-you-message {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .btn-container {
+      margin-top: 30px;
+    }
+
+    .btn-container a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #f39c12;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Shield Her Light Logo" />
+    <div class="title-section">
+      <h1>SHIELD HER LIGHT</h1>
+      <p>Empowering through leadership</p>
+    </div>
+  </header>
+
+  <main>
+    <h2>Vote for Your Candidate</h2>
+
+    <div class="position-section" id="president-candidates">
+      <h3>President</h3>
+    </div>
+
+    <div class="position-section" id="vp-candidates">
+      <h3>Vice President</h3>
+    </div>
+
+    <div class="position-section" id="sec-gen-candidates">
+      <h3>Secretary General</h3>
+    </div>
+
+    <div class="btn-container">
+      <a href="index.html">Back to Portal</a>
+    </div>
+
+    <div id="thank-you-message" class="thank-you-message">
+      Thank you for casting your vote! Your participation matters.
+    </div>
+  </main>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+
+    const candidates = {
+      President: [
+        {
+          name: "name",
+          email: "@example.com",
+          phone: "123-456-7890",
+          image: "candidates/image.jpg"
+        },
+        {
+          name: "name",
+          email: "@example.com",
+          phone: "987-654-3210",
+          image: "/image.jpg"
+        }
+      ],
+      VicePresident: [
+        {
+          name: "name",
+          email: "@example.com",
+          phone: "555-555-5555",
+          image: "candidates/image.jpg"
+        }
+      ],
+      SecretaryGeneral: [
+        {
+          name: "name",
+          email: "@example.com",
+          phone: "333-333-3333",
+          image: "candidates/image.jpg"
+        }
+      ]
+    };
+
+    function renderCandidates() {
+      for (const position in candidates) {
+        const section = document.getElementById(position.toLowerCase() + '-candidates');
+        candidates[position].forEach(candidate => {
+          const div = document.createElement('div');
+          div.classList.add('candidate');
+          div.innerHTML = `
+            <img src="${candidate.image}" alt="${candidate.name}" />
+            <div class="candidate-details">
+              <p><strong>Name:</strong> ${candidate.name}</p>
+              <p><strong>Email:</strong> ${candidate.email}</p>
+              <p><strong>Phone:</strong> ${candidate.phone}</p>
+              <button onclick="castVote('${position}', '${candidate.name}', '${candidate.email}')">Vote</button>
+            </div>
+          `;
+          section.appendChild(div);
+        });
+      }
+    }
+
+    function castVote(position, name, email) {
+      const voteData = {
+        position,
+        candidateName: name,
+        candidateEmail: email
+      };
+
+      emailjs.send('service_lc03bxg', 'template_20f2yep', voteData)
+        .then(function(response) {
+          console.log("Email sent", response.status, response.text);
+        }, function(error) {
+          console.error("Failed to send email", error);
+        });
+
+      document.getElementById('thank-you-message').style.display = 'block';
+    }
+
+    window.onload = renderCandidates;
+  </script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/2PACX-1vQ78l1tV_9oenMMKbFk4ZUrpNAiCi57-MMytIydIPG9n4jpNB4Ovg74gkm0uW5iK_gMEfEF3eCZLkWU/pubhtml/pub?output=csv";
+
+    fetch(SHEET_URL)
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.split('\n').slice(1); // Skip headers
+        const candidatesByPost = {};
+
+        rows.forEach(row => {
+          const [email, phone, gender, post, intentions, imageURL] = row.split(',');
+
+          if (!candidatesByPost[post]) candidatesByPost[post] = [];
+
+          candidatesByPost[post].push({
+            name: email.split('@')[0],  // Use email prefix as name
+            phone,
+            imageURL,
+            intentions,
+            post
+          });
+        });
+
+        const container = document.getElementById('candidates');
+
+        for (const post in candidatesByPost) {
+          const section = document.createElement('div');
+          section.classList.add('category');
+          section.innerHTML = <h2>${post}</h2>;
+
+          candidatesByPost[post].forEach(c => {
+            const candidateDiv = document.createElement('div');
+            candidateDiv.classList.add('candidate');
+            candidateDiv.innerHTML = `
+              <img src="${c.imageURL}" alt="${c.name}">
+              <h3>${c.name}</h3>
+              <p>${c.intentions}</p>
+              <button class="vote-button" onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
+            `;
+            section.appendChild(candidateDiv);
+          });
+
+          container.appendChild(section);
+        }
+      });
+
+    function vote(name, post, phone) {
+      alert(Thanks for voting for ${name} as ${post}!);
+
+      // You can trigger EmailJS or another backend call here if needed
+    }
+  </script>
+</body>
+</html>
