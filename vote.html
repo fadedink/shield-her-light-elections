@@ -150,20 +150,20 @@
   <script>
     emailjs.init("_evNT8iKXs92eSM28");
 
-    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ78l1tV_9oenMMKbFk4ZUrpNAiCi57-MMytIydIPG9n4jpNB4Ovg74gkm0uW5iK_gMEfEF3eCZLkWU/pub?output=csv";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbwyJ8jDsZefItPL6O34f6DnOckV_rKyySZJpsU419QxhZMhm9OOHNAHgldzO9-QoTW0/exec";
 
     function vote(name, post, phone) {
       const voteData = {
         candidateName: name,
         position: post,
-        candidateEmail: ${name}@example.com,
+        candidateEmail: `${name}@example.com`,
         candidatePhone: phone
       };
 
-      emailjs.send('service_p7oz0df', 'template_20f2yep', voteData)
+      emailjs.send('service_lc03bxg', 'template_20f2yep', voteData)
         .then(function(response) {
           document.getElementById('thank-you-message').style.display = 'block';
-          alert(Thanks for voting for ${name} as ${post}!);
+          alert(`Thanks for voting for ${name} as ${post}!`);
         }, function(error) {
           alert("Vote failed to send. Try again later.");
           console.error("EmailJS error:", error);
@@ -171,25 +171,24 @@
     }
 
     window.onload = function () {
-      fetch(https://script.google.com/macros/s/AKfycby8iP5y3fJDxmUlkVhGXsYvF2dK1VHhCZT0wHm8iqOJuBrEFI9F7f_DR3RAJIDuK0qB/exec)
-        .then(response => response.text())
+      fetch(https://script.google.com/macros/s/AKfycbwyJ8jDsZefItPL6O34f6DnOckV_rKyySZJpsU419QxhZMhm9OOHNAHgldzO9-QoTW0/exec)
+        .then(response => response.json())
         .then(data => {
-          const rows = data.trim().split('\n').slice(1); // Remove header
           const candidatesByPost = {};
 
-          rows.forEach(row => {
-            const [email, phone, gender, post, intentions, imageURL] = row.split(',');
+          data.forEach(entry => {
+            const { Email, Phone, Gender, Post, Intentions, ImageURL } = entry;
 
-            if (post.toLowerCase() === "treasurer") return; // Skip treasurer position
+            if (Post.toLowerCase() === "treasurer") return;
 
-            if (!candidatesByPost[post]) candidatesByPost[post] = [];
+            if (!candidatesByPost[Post]) candidatesByPost[Post] = [];
 
-            candidatesByPost[post].push({
-              name: email.split('@')[0],
-              phone,
-              imageURL,
-              intentions,
-              post
+            candidatesByPost[Post].push({
+              name: Email.split('@')[0],
+              phone: Phone,
+              imageURL: ImageURL,
+              intentions: Intentions,
+              post: Post
             });
           });
 
@@ -198,7 +197,7 @@
           for (const post in candidatesByPost) {
             const section = document.createElement('div');
             section.classList.add('position-section');
-            section.innerHTML = <h3>${post}</h3>;
+            section.innerHTML = `<h3>${post}</h3>`;
 
             candidatesByPost[post].forEach(c => {
               const candidateDiv = document.createElement('div');
@@ -217,6 +216,10 @@
 
             container.appendChild(section);
           }
+        })
+        .catch(error => {
+          console.error("Failed to fetch candidate data:", error);
+          alert("Couldn't load candidate info. Check your internet or retry.");
         });
     };
   </script>
