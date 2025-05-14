@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apply - Shield Her Light Election Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vote - Shield Her Light</title>
+  <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,7 +15,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
     }
 
     header {
@@ -33,10 +32,6 @@
       margin-right: 15px;
     }
 
-    header .title-section {
-      text-align: left;
-    }
-
     header .title-section h1 {
       margin: 0;
       font-size: 24px;
@@ -50,43 +45,68 @@
 
     main {
       padding: 30px;
-      max-width: 800px;
-    }
-
-    .form-container {
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 30px;
+      max-width: 900px;
       width: 100%;
     }
 
-    .form-container input,
-    .form-container select,
-    .form-container textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-      background-color: #ecf0f1;
-      color: #2c3e50;
+    h2, h3 {
+      color: #fff;
     }
 
-    .form-container button {
-      padding: 12px 24px;
+    .position-section {
+      margin-top: 40px;
+    }
+
+    .candidate {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.08);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .candidate img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #f39c12;
+    }
+
+    .candidate-details {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .candidate-details p {
+      margin: 5px 0;
+    }
+
+    .candidate button {
+      padding: 10px 20px;
       background-color: #f39c12;
       color: #fff;
-      text-decoration: none;
+      border: none;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      border: none;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
-    .form-container button:hover {
+    .candidate button:hover {
       background-color: #e67e22;
+    }
+
+    .thank-you-message {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      display: none;
     }
 
     .btn-container {
@@ -106,7 +126,7 @@
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Shield Her Light Logo">
+    <img src="logo.png" alt="Shield Her Light Logo" />
     <div class="title-section">
       <h1>SHIELD HER LIGHT</h1>
       <p>Empowering through leadership</p>
@@ -114,56 +134,91 @@
   </header>
 
   <main>
-    <h2>Apply for a Leadership Position</h2>
-
-    <div class="form-container">
-      <h2>Application Form</h2>
-      <form id="application-form">
-        <input type="email" id="email" name="email" placeholder="Your Email" required>
-        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
-        <select id="gender" name="gender" required>
-          <option value="" disabled selected>Select Your Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-        <select id="post" name="post" required>
-          <option value="" disabled selected>Select Position</option>
-          <option value="President">President</option>
-          <option value="Vice President">Vice President</option>
-          <option value="Secretary General">Secretary General</option>
-          <option value="Organizing Secretary">Organizing Secretary</option>
-          <option value="Finance Chairperson">Finance Chairperson</option>
-          <option value="Public Relations Officer">Public Relations Officer</option>
-          <option value="Welfare Officer">Welfare Officer</option>
-        </select>
-        <textarea id="intentions" name="intentions" placeholder="Why are you applying for this position?" rows="4" required></textarea>
-        <input type="file" id="profilePicture" name="profilePicture" required>
-        <button type="submit">Submit Application</button>
-      </form>
-    </div>
+    <h2>Vote for Your Candidate</h2>
+    <div id="candidate-container"></div>
 
     <div class="btn-container">
       <a href="index.html">Back to Portal</a>
+    </div>
+
+    <div id="thank-you-message" class="thank-you-message">
+      Thank you for casting your vote! Your participation matters.
     </div>
   </main>
 
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
-    emailjs.init("service_lc03bxg");
+    emailjs.init("YOUR_USER_ID"); // Replace with your actual EmailJS user ID
 
-    document.getElementById("application-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      
-      emailjs.sendForm('service_lc03bxg', 'template_8pcva3w', this)
-        .then(() => {
-          alert('Your application has been submitted successfully!');
-          this.reset();
-        }, (error) => {
-          console.error('EmailJS Error:', error);
-          alert('Submission failed. Please try again.');
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ78l1tV_9oenMMKbFk4ZUrpNAiCi57-MMytIydIPG9n4jpNB4Ovg74gkm0uW5iK_gMEfEF3eCZLkWU/pub?output=csv";
+
+    function vote(name, post, phone) {
+      const voteData = {
+        candidateName: name,
+        position: post,
+        candidateEmail: ${name}@example.com,
+        candidatePhone: phone
+      };
+
+      emailjs.send('service_lc03bxg', 'template_20f2yep', voteData)
+        .then(function(response) {
+          document.getElementById('thank-you-message').style.display = 'block';
+          alert(Thanks for voting for ${name} as ${post}!);
+        }, function(error) {
+          alert("Vote failed to send. Try again later.");
+          console.error("EmailJS error:", error);
         });
-    });
+    }
+
+    window.onload = function () {
+      fetch(SHEET_URL)
+        .then(response => response.text())
+        .then(data => {
+          const rows = data.trim().split('\n').slice(1); // Remove header
+          const candidatesByPost = {};
+
+          rows.forEach(row => {
+            const [email, phone, gender, post, intentions, imageURL] = row.split(',');
+
+            if (post.toLowerCase() === "treasurer") return; // Skip treasurer position
+
+            if (!candidatesByPost[post]) candidatesByPost[post] = [];
+
+            candidatesByPost[post].push({
+              name: email.split('@')[0],
+              phone,
+              imageURL,
+              intentions,
+              post
+            });
+          });
+
+          const container = document.getElementById('candidate-container');
+
+          for (const post in candidatesByPost) {
+            const section = document.createElement('div');
+            section.classList.add('position-section');
+            section.innerHTML = <h3>${post}</h3>;
+
+            candidatesByPost[post].forEach(c => {
+              const candidateDiv = document.createElement('div');
+              candidateDiv.classList.add('candidate');
+              candidateDiv.innerHTML = `
+                <img src="${c.imageURL}" alt="${c.name}">
+                <div class="candidate-details">
+                  <p><strong>Name:</strong> ${c.name}</p>
+                  <p><strong>Phone:</strong> ${c.phone}</p>
+                  <p><strong>Intentions:</strong> ${c.intentions}</p>
+                  <button onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
+                </div>
+              `;
+              section.appendChild(candidateDiv);
+            });
+
+            container.appendChild(section);
+          }
+        });
+    };
   </script>
 </body>
 </html>
