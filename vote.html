@@ -150,7 +150,7 @@
   <script>
     emailjs.init("_evNT8iKXs92eSM28");
 
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbyYGBMGfcjRKkW7FfM-G3RuWr0tY66oNl31iHn2dotb2XL5QlYS3Wns9MvKypqVXtUX/exec";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbwHjTCA9YJfJscYreWS5KMztj_p9nDI73BeXAhKj_iHYcL_ZIyu_iRYGuDMr7619eis/exec";
 
     function vote(name, post, phone) {
       const voteData = {
@@ -170,62 +170,61 @@
         });
     }
 
-window.onload = function () {
-  fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec")
-    .then(response => response.json())
-    .then(data => {
-      const candidatesByPost = {};
+    window.onload = function () {
+      fetch(SHEET_URL)
+        .then(response => response.json())
+        .then(data => {
+          const candidatesByPost = {};
 
-      data.forEach(entry => {
-        const email = entry["Email Address"];
-        const phone = entry["Phone Number umber"];
-        const post = entry["Position you are applying for"];
-        const intentions = entry["Do you want this position?"];
-        const imageURL = entry["Your photo"];
+          data.forEach(entry => {
+            const { Email, Phone, Gender, Post, Intentions, ImageURL } = entry;
 
-        if (post.toLowerCase() === "treasurer") return;
+            if (Post.toLowerCase() === "treasurer") return;
 
-        if (!candidatesByPost[post]) candidatesByPost[post] = [];
+            if (!candidatesByPost[Post]) candidatesByPost[Post] = [];
 
-        candidatesByPost[post].push({
-          name: email.split('@')[0],
-          phone: phone,
-          imageURL: imageURL,
-          intentions: intentions,
-          post: post
+            candidatesByPost[Post].push({
+              name: Email.split('@')[0],
+              phone: Phone,
+              imageURL: ImageURL,
+              intentions: Intentions,
+              post: Post
+            });
+          });
+
+          const container = document.getElementById('candidate-container');
+          
+          // Debugging: Log the structured data
+          console.log(candidatesByPost);
+
+          for (const post in candidatesByPost) {
+            const section = document.createElement('div');
+            section.classList.add('position-section');
+            section.innerHTML = <h3>${post}</h3>;
+
+            candidatesByPost[post].forEach(c => {
+              const candidateDiv = document.createElement('div');
+              candidateDiv.classList.add('candidate');
+              candidateDiv.innerHTML = `
+                <img src="${c.imageURL}" alt="${c.name}">
+                <div class="candidate-details">
+                  <p><strong>Name:</strong> ${c.name}</p>
+                  <p><strong>Phone:</strong> ${c.phone}</p>
+                  <p><strong>Intentions:</strong> ${c.intentions}</p>
+                  <button onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
+                </div>
+              `;
+              section.appendChild(candidateDiv);
+            });
+
+            container.appendChild(section);
+          }
+        })
+        .catch(error => {
+          console.error("Failed to fetch candidate data:", error);
+          alert("Couldn't load candidate info. Check your internet or retry.");
         });
-      });
-
-      const container = document.getElementById('candidate-container');
-
-      for (const post in candidatesByPost) {
-        const section = document.createElement('div');
-        section.classList.add('position-section');
-        section.innerHTML = <h3>${post}</h3>;
-
-        candidatesByPost[post].forEach(c => {
-          const candidateDiv = document.createElement('div');
-          candidateDiv.classList.add('candidate');
-          candidateDiv.innerHTML = `
-            <img src="${c.imageURL}" alt="${c.name}">
-            <div class="candidate-details">
-              <p><strong>Name:</strong> ${c.name}</p>
-              <p><strong>Phone:</strong> ${c.phone}</p>
-              <p><strong>Intentions:</strong> ${c.intentions}</p>
-              <button onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
-            </div>
-          `;
-          section.appendChild(candidateDiv);
-        });
-
-        container.appendChild(section);
-      }
-    })
-    .catch(error => {
-      console.error("Failed to fetch candidate data:", error);
-      alert("Couldn't load candidate info. Check your internet or retry.");
-    });
-};
+    };
   </script>
 </body>
 </html>
