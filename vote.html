@@ -156,14 +156,14 @@
       const voteData = {
         candidateName: name,
         position: post,
-        candidateEmail: `${name}@example.com`,
+        candidateEmail: ${name}@example.com,
         candidatePhone: phone
       };
 
       emailjs.send('service_lc03bxg', 'template_20f2yep', voteData)
         .then(function(response) {
           document.getElementById('thank-you-message').style.display = 'block';
-          alert(`Thanks for voting for ${name} as ${post}!`);
+          alert(Thanks for voting for ${name} as ${post}!);
         }, function(error) {
           alert("Vote failed to send. Try again later.");
           console.error("EmailJS error:", error);
@@ -171,13 +171,18 @@
     }
 
     window.onload = function () {
-      fetch(https://script.google.com/macros/s/AKfycbyYGBMGfcjRKkW7FfM-G3RuWr0tY66oNl31iHn2dotb2XL5QlYS3Wns9MvKypqVXtUX/exec)
+      fetch(SHEET_URL)
         .then(response => response.json())
         .then(data => {
           const candidatesByPost = {};
 
           data.forEach(entry => {
-            const { Email, Phone, Gender, Post, Intentions, ImageURL } = entry;
+            const Email = entry.Email || entry.email || "";
+            const Phone = entry.Phone || entry.phone || "";
+            const Gender = entry.Gender || entry.gender || "";
+            const Post = entry.Post || entry.post || "";
+            const Intentions = entry.Intentions || entry.intentions || "";
+            const ImageURL = entry.ImageURL || entry.imageurl || "default.png";
 
             if (Post.toLowerCase() === "treasurer") return;
 
@@ -197,7 +202,7 @@
           for (const post in candidatesByPost) {
             const section = document.createElement('div');
             section.classList.add('position-section');
-            section.innerHTML = `<h3>${post}</h3>`;
+            section.innerHTML = <h3>${post}</h3>;
 
             candidatesByPost[post].forEach(c => {
               const candidateDiv = document.createElement('div');
