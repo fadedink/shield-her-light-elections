@@ -170,63 +170,62 @@
         });
     }
 
-    window.onload = function () {
-      fetch(SHEET_URL)
-        .then(response => response.json())
-        .then(data => {
-          const candidatesByPost = {};
+window.onload = function () {
+  fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec")
+    .then(response => response.json())
+    .then(data => {
+      const candidatesByPost = {};
 
-          data.forEach(entry => {
-            const Email = entry.Email || entry.email || "";
-            const Phone = entry.Phone || entry.phone || "";
-            const Gender = entry.Gender || entry.gender || "";
-            const Post = entry.Post || entry.post || "";
-            const Intentions = entry.Intentions || entry.intentions || "";
-            const ImageURL = entry.ImageURL || entry.imageurl || "default.png";
+      data.forEach(entry => {
+        const email = entry["Email Address"];
+        const phone = entry["Phone Number umber"];
+        const post = entry["Position you are applying for"];
+        const intentions = entry["Do you want this position?"];
+        const imageURL = entry["Your photo"];
 
-            if (Post.toLowerCase() === "treasurer") return;
+        if (post.toLowerCase() === "treasurer") return;
 
-            if (!candidatesByPost[Post]) candidatesByPost[Post] = [];
+        if (!candidatesByPost[post]) candidatesByPost[post] = [];
 
-            candidatesByPost[Post].push({
-              name: Email.split('@')[0],
-              phone: Phone,
-              imageURL: ImageURL,
-              intentions: Intentions,
-              post: Post
-            });
-          });
-
-          const container = document.getElementById('candidate-container');
-
-          for (const post in candidatesByPost) {
-            const section = document.createElement('div');
-            section.classList.add('position-section');
-            section.innerHTML = <h3>${post}</h3>;
-
-            candidatesByPost[post].forEach(c => {
-              const candidateDiv = document.createElement('div');
-              candidateDiv.classList.add('candidate');
-              candidateDiv.innerHTML = `
-                <img src="${c.imageURL}" alt="${c.name}">
-                <div class="candidate-details">
-                  <p><strong>Name:</strong> ${c.name}</p>
-                  <p><strong>Phone:</strong> ${c.phone}</p>
-                  <p><strong>Intentions:</strong> ${c.intentions}</p>
-                  <button onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
-                </div>
-              `;
-              section.appendChild(candidateDiv);
-            });
-
-            container.appendChild(section);
-          }
-        })
-        .catch(error => {
-          console.error("Failed to fetch candidate data:", error);
-          alert("Couldn't load candidate info. Check your internet or retry.");
+        candidatesByPost[post].push({
+          name: email.split('@')[0],
+          phone: phone,
+          imageURL: imageURL,
+          intentions: intentions,
+          post: post
         });
-    };
+      });
+
+      const container = document.getElementById('candidate-container');
+
+      for (const post in candidatesByPost) {
+        const section = document.createElement('div');
+        section.classList.add('position-section');
+        section.innerHTML = <h3>${post}</h3>;
+
+        candidatesByPost[post].forEach(c => {
+          const candidateDiv = document.createElement('div');
+          candidateDiv.classList.add('candidate');
+          candidateDiv.innerHTML = `
+            <img src="${c.imageURL}" alt="${c.name}">
+            <div class="candidate-details">
+              <p><strong>Name:</strong> ${c.name}</p>
+              <p><strong>Phone:</strong> ${c.phone}</p>
+              <p><strong>Intentions:</strong> ${c.intentions}</p>
+              <button onclick="vote('${c.name}', '${c.post}', '${c.phone}')">Vote</button>
+            </div>
+          `;
+          section.appendChild(candidateDiv);
+        });
+
+        container.appendChild(section);
+      }
+    })
+    .catch(error => {
+      console.error("Failed to fetch candidate data:", error);
+      alert("Couldn't load candidate info. Check your internet or retry.");
+    });
+};
   </script>
 </body>
 </html>
