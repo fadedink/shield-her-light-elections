@@ -1,27 +1,4 @@
-[02:55, 14/05/2025] +254 794 209536: function onFormSubmit(e) {
-  const email = "your_email@example.com"; // your email to receive notification
-  const subject = "New Shield Her Light Application Submitted";
-  const message = "A new form was submitted. Check the responses in the sheet.";
-
-  MailApp.sendEmail(email, subject, message);
-}
-[03:03, 14/05/2025] +254 794 209536: function onFormSubmit(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet();
-  const row = e.range.getRow();
-  const data = sheet.getSheetByName("Form Responses 1").getRange(row, 1, 1, sheet.getLastColumn()).getValues()[0];
-  
-  const emailAddress = data[0]; // Column A: Email
-  const position = data[4];     // Column E: Position applied for
-
-  const subject = "Shield Her Light - Application Confirmation";
-  const message = `Dear Applicant,
-
-Thank you for submitting your application for a leadership position with Shield Her Light.
-
-We are happy to confirm that your application has been received successfully and that you have been listed as an applicant for the position of ${position}.
-
-We will reach out with updates regarding the next steps in the elect…
-[03:29, 14/05/2025] +254 794 209536: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
