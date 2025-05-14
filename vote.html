@@ -148,7 +148,7 @@
 
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
-    emailjs.init("YOUR_USER_ID"); // Replace with your actual EmailJS user ID
+    emailjs.init("_evNT8iKXs92eSM28");
 
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ78l1tV_9oenMMKbFk4ZUrpNAiCi57-MMytIydIPG9n4jpNB4Ovg74gkm0uW5iK_gMEfEF3eCZLkWU/pub?output=csv";
 
@@ -160,7 +160,7 @@
         candidatePhone: phone
       };
 
-      emailjs.send('service_lc03bxg', 'template_20f2yep', voteData)
+      emailjs.send('service_p7oz0df', 'template_20f2yep', voteData)
         .then(function(response) {
           document.getElementById('thank-you-message').style.display = 'block';
           alert(Thanks for voting for ${name} as ${post}!);
